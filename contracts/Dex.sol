@@ -74,7 +74,7 @@ contract Dex {
         tokenList.push(ticker);
     }
 
-    function depoisit(uint amount, bytes32 ticker) external tokenExist(ticker) {
+    function deposit(uint amount, bytes32 ticker) external tokenExist(ticker) {
         IERC20(tokens[ticker].tokenAddress).transferFrom(msg.sender, address(this), amount);
         traderBalances[msg.sender][ticker] = traderBalances[msg.sender][ticker].add(amount);
     }
