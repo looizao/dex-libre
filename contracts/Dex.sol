@@ -57,17 +57,17 @@ contract Dex {
         return orderBook[ticker][uint(side)];
     }
 
-    function getTokens() external view returns(Token[] memory) {
-      Token[] memory _tokens = new Token[](tokenList.length);
-      for (uint i = 0; i < tokenList.length; i++) {
-        _tokens[i] = Token(
-          tokens[tokenList[i]].name,
-          tokens[tokenList[i]].symbol,
-          tokens[tokenList[i]].at
-        );
-      }
-      return _tokens;
-    }
+    // function getTokens() external view returns(Token[] memory) {
+    //   Token[] memory _tokens = new Token[](tokenList.length);
+    //   for (uint i = 0; i < tokenList.length; i++) {
+    //     _tokens[i] = Token(
+    //       tokens[tokenList[i]].name,
+    //       tokens[tokenList[i]].symbol,
+    //       tokens[tokenList[i]].at
+    //     );
+    //   }
+    //   return _tokens;
+    // }
 
     function addToken(bytes32 ticker, address tokenAddress) onlyAdmin() external {
         tokens[ticker] = Token(ticker, tokenAddress);
@@ -161,7 +161,7 @@ contract Dex {
         }
 
         i = 0;
-        while(i < orders.legth && orders[i].filled == orders[i].amount) {
+        while(i < orders.length && orders[i].filled == orders[i].amount) {
             for(uint j = i; j< orders.length - 1; j++) {
                 orders[j] = orders[j + 1];
             }

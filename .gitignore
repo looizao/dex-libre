@@ -2,3 +2,4 @@ node_modules
 build
 test/.placeholder
 contracts/.placeholder
+node_modules
