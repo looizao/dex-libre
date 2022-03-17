@@ -30,35 +30,54 @@ contract('Dex', (accounts) => {
       dex.addToken(ZRX, zrx.address)
     ]);
     console.log('0')
-    const amount = web3.utils.toWei('1000');
+    const amount = web3.utils.toWei('1000000000000000000000', 'wei');
     const seedTokenBalance = async (token, trader) => {
-      await token.faucet(trader, amount);
       await console.log('1')
-      await token.approve(dex.address, amount, {from: trader});
+      await token.faucet(trader, amount);
+      await token.approve(trader, amount);
+      let a = await token.allowance(dex.address, trader);
+      console.log("allowance:")
+      console.log(a)
     }
+
+    await Promise.all([
+      dai.faucet(trader1, amount)
+    ]);
+
+    await Promise.all([
+      dai.approve(trader1, amount)
+    ]);
+
+    let a = 12345;
+    await Promise.all([
+        console.log(dai.allowance(dex.address, trader1))
+    ])
+
+
     console.log('2')
-    await Promise.all(
-      [dai, bat, rep, zrx].map(
-        token => {
-          console.log('a ' + token)
-          seedTokenBalance(token, trader1)
-        }
-      )
-    );
-    await Promise.all(
-      [dai, bat, rep, zrx].map(
-        token => {
-          console.log('b ' + token)
-          seedTokenBalance(token, trader2)
-        }
-      )
-    );
+    // await Promise.all(
+    //   [dai, bat, rep, zrx].map(
+    //     token => {
+    //       console.log('a ' + trader1)
+    //       seedTokenBalance(token, trader1)
+    //     }
+    //   )
+    // );
+    // await Promise.all(
+    //   [dai, bat, rep, zrx].map(
+    //     token => {
+    //       console.log('b ' + token)
+    //       seedTokenBalance(token, trader2)
+    //     }
+    //   )
+    // );
     console.log('3')
   });
 
   it('should deposit tokens', async () => {
-    const amount = web3.utils.toWei('100');
+    const amount = web3.utils.toWei('1', 'wei');
     console.log('tst')
+    console.log(amount)
 
     await dex.deposit(amount, DAI, {from: trader1});
 
